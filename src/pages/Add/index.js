@@ -49,8 +49,6 @@ const ProductYup = Yup.object().shape({
             img.src = URL.createObjectURL(value);
             return img.decode().then(() => {
               URL.revokeObjectURL(img.src);
-              console.log(img.width);
-              console.log(img.height);
               if (
                 img.width < 200 ||
                 img.height < 200 ||
@@ -93,9 +91,14 @@ const AddProduct = ({ addProduct, error, loading, clean, success }) => {
                 productImage: undefined,
               }}
               validationSchema={ProductYup}
-              onSubmit={async (values, { setSubmitting, resetForm }) => {
+              onSubmit={async (
+                values,
+                { setSubmitting, resetForm, setStatus }
+              ) => {
                 await addProduct(values);
-                resetForm();
+                resetForm({});
+                setStatus({ success: true });
+
                 setSubmitting(false);
               }}
             >
@@ -106,6 +109,7 @@ const AddProduct = ({ addProduct, error, loading, clean, success }) => {
                 errors,
                 touched,
                 handleBlur,
+                status,
               }) => (
                 <FormWrapper>
                   <FormStyled>
@@ -147,6 +151,7 @@ const AddProduct = ({ addProduct, error, loading, clean, success }) => {
                       type="file"
                       accept="image/*"
                       value={undefined}
+                      status={status}
                       component={ImageInput}
                     />
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
@@ -94,15 +94,37 @@ const EditProduct = ({
   requested,
   editProduct,
 }) => {
+  let content;
+  let params = useParams();
+
+  const [oldFile, setOldFile] = useState();
+
   useEffect(() => {
     return () => {
       clean();
     };
   }, [clean]);
 
-  let content;
+  useEffect(async () => {
+    if (
+      products !== undefined &&
+      products !== null &&
+      products[params.id] !== undefined
+    ) {
+      const url = products[params.id].image;
+      const fileName = `edit.jpg`;
 
-  let params = useParams();
+      //get url and convert blob to file
+      // here should extract filename from URL......  later hopefully
+      fetch(url).then(async (response) => {
+        const contentType = response.headers.get("content-type");
+        const blob = await response.blob();
+        const file = new File([blob], fileName, { contentType });
+
+        setOldFile(file);
+      });
+    }
+  }, [products, params]);
 
   if (products === undefined) {
     content = (
@@ -110,7 +132,7 @@ const EditProduct = ({
         <p>Loading...</p>
       </ResultWrapper>
     );
-  } else if (requested.products && products === null) {
+  } else if (requested && products === null) {
     content = (
       <ResultWrapper>
         <p>No products has been added yet</p>
@@ -139,7 +161,7 @@ const EditProduct = ({
               price: products[params.id].price,
               discount: products[params.id].discount,
               endDate: products[params.id].endDate,
-              //   productImage: '',
+              productImage: undefined,
             }}
             validationSchema={ProductEditYup}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
@@ -191,13 +213,14 @@ const EditProduct = ({
                     component={Input}
                   />
 
-                  {/* <Field
+                  <Field
                     name="productImage"
                     type="file"
                     accept="image/*"
                     value={undefined}
+                    firebaseImage={oldFile ? oldFile : undefined}
                     component={ImageInput}
-                  /> */}
+                  />
 
                   <Button
                     type="submit"
@@ -246,3 +269,12 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect(() => ["products"])
 )(EditProduct);
+
+async function convertUrlToFile(url, fileName) {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const contentType = response.headers.get("content-type");
+  const file = new File([blob], fileName, { contentType });
+
+  return file;
+}

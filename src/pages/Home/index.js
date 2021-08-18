@@ -38,7 +38,7 @@ const Home = ({ products, requesting, requested, loggedIn }) => {
         <p>Loading...</p>
       </ResultWrapper>
     );
-  } else if (requested.products && products === null) {
+  } else if (requested && products === null) {
     result = (
       <ResultWrapper>
         <p>No products has been added yet</p>

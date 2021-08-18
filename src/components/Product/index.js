@@ -136,12 +136,14 @@ const Product = ({ product, loggedIn, deleteProduct, loading, error }) => {
     let end = product.endDate;
     let days = getDays(now, end);
 
-    discount = (
-      <>
-        <Discount>{product.discount}% off</Discount>
-        <DaysLeft>{days} days left</DaysLeft>
-      </>
-    );
+    if (days > 0) {
+      discount = (
+        <>
+          <Discount>{product.discount}% off</Discount>
+          <DaysLeft>{days} days left</DaysLeft>
+        </>
+      );
+    }
   } else {
     discount = null;
   }
@@ -150,7 +152,7 @@ const Product = ({ product, loggedIn, deleteProduct, loading, error }) => {
   if (loggedIn) {
     manageOptions = (
       <ManageWrapper>
-        <ButtonNav to={`/edit/${product.id}`}>edit</ButtonNav>
+        <ButtonNav to={`/edit/${product.id}`}>Edit</ButtonNav>
 
         <ButtonDelete
           onClick={async () => await deleteProduct(product.id)}
