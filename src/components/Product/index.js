@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
+import Message from "../../components/UI/Forms/Message";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -110,8 +111,7 @@ const Button = styled.button`
   }
 `;
 
-const Product = ({ product, loggedIn, deleteProduct }) => {
-  console.log(product);
+const Product = ({ product, loggedIn, deleteProduct, loading, error }) => {
 
   let discount;
 
@@ -136,9 +136,16 @@ const Product = ({ product, loggedIn, deleteProduct }) => {
       <ManageWrapper>
         <Button>edit</Button>
 
-        <Button onClick={async () => await deleteProduct(product.key)}>
-          delete
+        <Button
+          onClick={async () => await deleteProduct(product.id)}
+          disabled={loading}
+        >
+          {loading ? "Deleting..." : `Delete`}
         </Button>
+
+        <Message error show={error}>
+          {error}
+        </Message>
       </ManageWrapper>
     );
   }

@@ -34,7 +34,10 @@ export const addProduct =
 
     const registerProduct = async (url) => {
       try {
-        const newProduct = {
+        const ref = firestore.collection("products").doc();
+
+        ref.set({
+          id: ref.id,
           title: data.title,
           description: data.description,
           price: data.price,
@@ -42,9 +45,11 @@ export const addProduct =
           discount: data.discount,
           image: url,
           date: new Date().valueOf(),
-        };
+        });
 
-        await firestore.collection("products").add(newProduct);
+        // const newProduct = {};
+
+        // await firestore.collection("products").set(newProduct);
 
         dispatch({ type: "ADD_PRODUCT_SUCCESS" });
       } catch (err) {
@@ -61,10 +66,15 @@ export const addCleanUp = () => (dispatch) => {
 export const deleteProduct =
   (id) =>
   async (dispatch, getState, { getFirestore }) => {
-   
+    const firestore = getFirestore();
+
     dispatch({ type: `DELETE_PRODUCT_START` });
     try {
-    
+      await firestore.collection("products").doc(id).delete();
+
+      console.log("delete product");
+      console.log(id);
+
       dispatch({ type: `DELETE_PRODUCT_SUCCESS` });
     } catch (err) {
       dispatch({ type: `DELETE_PRODUCT_FAIL`, payload: err.message });

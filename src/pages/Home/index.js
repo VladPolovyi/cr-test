@@ -46,14 +46,17 @@ const Home = ({ products, requesting, requested, loggedIn }) => {
     );
   } else {
     // when products fetched
-    let arrayResult = dictionaryToArray(products);
-    // sort products in desc order
-    arrayResult.sort((a, b) => (a.date > b.date ? -1 : 1));
+    let arrayResult = Object.values(products).filter(
+      (x) => x !== null && x !== ""
+    );
 
+    arrayResult.sort((a, b) => {
+      return a.date > b.date ? -1 : 1;
+    });
     result = (
       <ListWrapper>
         {arrayResult.map((e) => (
-          <Product key={e.key} product={e} loggedIn={loggedIn} />
+          <Product key={e.id} product={e} loggedIn={loggedIn} />
         ))}
       </ListWrapper>
     );
@@ -71,7 +74,7 @@ const Home = ({ products, requesting, requested, loggedIn }) => {
         <Heading>PRODUCTS</Heading>
         {addNew}
         {result}
-        {/* <pre>{JSON.stringify(products, null, 2)}</pre> */}
+        {/* <pre>{JSON.stringify(arrayResult, null, 2)}</pre> */}
       </Container>
     </Section>
   );
@@ -91,12 +94,12 @@ export default compose(
   firestoreConnect(() => ["products"])
 )(Home);
 
-const dictionaryToArray = (dictionary) => {
-  let array = [];
+// const dictionaryToArray = (dictionary) => {
+//   let array = [];
 
-  for (const key in dictionary) {
-    array.push({ ...dictionary[key], key: key });
-  }
+//   for (const key in dictionary) {
+//     array.push({ ...dictionary[key] });
+//   }
 
-  return array;
-};
+//   return array;
+// };
