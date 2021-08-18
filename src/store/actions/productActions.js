@@ -1,13 +1,10 @@
 //add product
-
 export const addProduct =
   (data) =>
   async (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     const firebase = getFirebase();
     dispatch({ type: "ADD_PRODUCT_START" });
-
-    console.log(data.productImage);
 
     const storage = firebase.storage();
 
@@ -59,3 +56,17 @@ export const addProduct =
 export const addCleanUp = () => (dispatch) => {
   dispatch({ type: "ADD_CLEAN_UP" });
 };
+
+// Delete Product
+export const deleteProduct =
+  (id) =>
+  async (dispatch, getState, { getFirestore }) => {
+   
+    dispatch({ type: `DELETE_PRODUCT_START` });
+    try {
+    
+      dispatch({ type: `DELETE_PRODUCT_SUCCESS` });
+    } catch (err) {
+      dispatch({ type: `DELETE_PRODUCT_FAIL`, payload: err.message });
+    }
+  };

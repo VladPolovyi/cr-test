@@ -9,6 +9,7 @@ const theme = {
     red: "#8f1500",
     green: "#48d7b6",
     sky: "#AED8E6",
+    orange: "#FF5F1F",
   },
 };
 

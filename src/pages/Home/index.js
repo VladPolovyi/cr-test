@@ -17,8 +17,7 @@ const ListWrapper = styled.div`
   padding: 20px 0;
   font-size: 20px;
   display: grid;
-
-  column-gap: 30px;
+  gap: 30px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 
   @media (max-width: 991px) {
@@ -46,16 +45,15 @@ const Home = ({ products, requesting, requested, loggedIn }) => {
       </ResultWrapper>
     );
   } else {
+    // when products fetched
     let arrayResult = dictionaryToArray(products);
-
+    // sort products in desc order
     arrayResult.sort((a, b) => (a.date > b.date ? -1 : 1));
-
-    console.log(arrayResult);
 
     result = (
       <ListWrapper>
         {arrayResult.map((e) => (
-          <Product key={e.key} product={e} />
+          <Product key={e.key} product={e} loggedIn={loggedIn} />
         ))}
       </ListWrapper>
     );
@@ -66,8 +64,6 @@ const Home = ({ products, requesting, requested, loggedIn }) => {
   if (loggedIn) {
     addNew = <Button to="/add">Add new product</Button>;
   }
-
-  console.log({ loggedIn });
 
   return (
     <Section>

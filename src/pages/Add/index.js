@@ -67,25 +67,7 @@ const ProductYup = Yup.object().shape({
           }
         });
       }
-      //  (value) => {
-      //   const img = new Image();
-      //   img.src = URL.createObjectURL(value);
-      //   return img.decode().then(() => {
-      //     URL.revokeObjectURL(img.src);
-      //     console.log(img.width);
-      //     console.log(img.height);
-      //     if (
-      //       img.width < 200 ||
-      //       img.height < 200 ||
-      //       img.height > 4000 ||
-      //       img.width > 4000
-      //     ) {
-      //       return false;
-      //     } else {
-      //       return true;
-      //     }
-      //   });
-      // }
+   
     ),
 });
 

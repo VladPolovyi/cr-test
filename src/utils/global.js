@@ -11,6 +11,7 @@ export default createGlobalStyle`
     --color-red: ${(props) => props.theme.colors.red};
     --color-green: ${(props) => props.theme.colors.green};
     --color-sky: ${(props) => props.theme.colors.sky};
+    --color-orange: ${(props) => props.theme.colors.orange};
   }
 
   body {

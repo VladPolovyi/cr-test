@@ -2,6 +2,10 @@ const initialState = {
   error: null,
   loading: false,
   success: false,
+  deleteProduct: {
+    error: null,
+    loading: false,
+  },
 };
 
 const productsReducer = (state = initialState, { type, payload }) => {
@@ -17,6 +21,24 @@ const productsReducer = (state = initialState, { type, payload }) => {
 
     case `ADD_CLEAN_UP`:
       return { ...state, error: false, success: false };
+
+    case `DELETE_PRODUCT_START`:
+      return {
+        ...state,
+        deleteProduct: { ...state.deleteProduct, loading: true },
+      };
+
+    case `DELETE_PRODUCT_SUCCESS`:
+      return {
+        ...state,
+        deleteProduct: { ...state.deleteProduct, loading: false, error: false },
+      };
+
+    case `DELETE_PRODUCT_FAIL`:
+      return {
+        ...state,
+        deleteProduct: { ...state.deleteProduct, loading: false, error: payload },
+      };
 
     default:
       return state;
