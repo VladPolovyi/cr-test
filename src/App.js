@@ -18,7 +18,7 @@ function App({ loggedIn }) {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/add" component={Add} />
-        <Route exact path="/edit" component={Edit} />
+        <Route exact path="/edit/:id" component={Edit} />
         <Route exact path="/logout" component={Logout} />
         <Redirect to="/" />
       </Switch>

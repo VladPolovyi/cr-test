@@ -80,3 +80,30 @@ export const deleteProduct =
       dispatch({ type: `DELETE_PRODUCT_FAIL`, payload: err.message });
     }
   };
+
+export const deleteCleanUp = () => (dispatch) => {
+  dispatch({ type: "DELETE_CLEAN_UP" });
+};
+
+// Delete Product
+export const editProduct =
+  (id, data) =>
+  async (dispatch, getState, { getFirestore }) => {
+    const firestore = getFirestore();
+
+    console.log(id);
+    console.log(data);
+
+    dispatch({ type: `EDIT_PRODUCT_START` });
+    try {
+      await firestore.collection("products").doc(id).update(data);
+
+      dispatch({ type: `EDIT_PRODUCT_SUCCESS` });
+    } catch (err) {
+      dispatch({ type: `EDIT_PRODUCT_FAIL`, payload: err.message });
+    }
+  };
+
+export const editCleanUp = () => (dispatch) => {
+  dispatch({ type: "EDIT_CLEAN_UP" });
+};

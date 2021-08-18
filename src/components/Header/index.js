@@ -13,6 +13,7 @@ const HeaderWrapper = styled.header`
   height: 4rem;
   display: flex;
   align-items: center;
+  z-index: 10;
 `;
 
 const Inner = styled.div`

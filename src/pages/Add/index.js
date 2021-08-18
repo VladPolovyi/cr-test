@@ -35,7 +35,7 @@ const ProductYup = Yup.object().shape({
     is: (discount) => discount > 0,
     then: Yup.date()
       .required("You need to set discount end date.")
-      .min(new Date() + 1, 'Date must be later by 1 day'),
+      .min(new Date() + 1, "Date must be later by 1 day"),
   }),
   productImage: Yup.mixed()
     .required("Product Image is required")
@@ -67,16 +67,8 @@ const ProductYup = Yup.object().shape({
           }
         });
       }
-   
     ),
 });
-
-const StyledNavLink = styled(NavLink)`
-  color: var(--color-white);
-  &:hover {
-    color: var(--color-white);
-  }
-`;
 
 const AddProduct = ({ addProduct, error, loading, clean, success }) => {
   useEffect(() => {
@@ -104,6 +96,7 @@ const AddProduct = ({ addProduct, error, loading, clean, success }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 await addProduct(values);
                 resetForm();
+                setSubmitting(false);
               }}
             >
               {({
@@ -160,7 +153,7 @@ const AddProduct = ({ addProduct, error, loading, clean, success }) => {
                     <Button
                       type="submit"
                       loading={loading ? "Adding..." : null}
-                      disabled={!isValid || isSubmitting}
+                      disabled={!isValid || isSubmitting || loading}
                     >
                       Add product
                     </Button>
@@ -169,10 +162,7 @@ const AddProduct = ({ addProduct, error, loading, clean, success }) => {
                       {error}
                     </Message>
                     <Message success show={error === false && success === true}>
-                      Product successfully added, go back to{" "}
-                      <StyledNavLink exact to="/">
-                        Products
-                      </StyledNavLink>
+                      Product successfully added!!!
                     </Message>
                   </FormStyled>
                 </FormWrapper>

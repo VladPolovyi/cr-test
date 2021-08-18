@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 import Message from "../../components/UI/Forms/Message";
+import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -95,7 +96,7 @@ const ManageWrapper = styled.div`
   padding: 20px 10px;
 `;
 
-const Button = styled.button`
+const ButtonNav = styled(NavLink)`
   display: block;
   width: 100%;
   padding: 10px;
@@ -111,8 +112,23 @@ const Button = styled.button`
   }
 `;
 
-const Product = ({ product, loggedIn, deleteProduct, loading, error }) => {
+const ButtonDelete = styled.button`
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  text-decoration: none;
+  background-color: var(--color-red);
+  color: var(--color-white);
 
+  &:hover {
+    color: var(--color-white);
+    background-color: var(--color-red);
+  }
+`;
+
+const Product = ({ product, loggedIn, deleteProduct, loading, error }) => {
   let discount;
 
   if (product.discount && product.endDate) {
@@ -134,14 +150,14 @@ const Product = ({ product, loggedIn, deleteProduct, loading, error }) => {
   if (loggedIn) {
     manageOptions = (
       <ManageWrapper>
-        <Button>edit</Button>
+        <ButtonNav to={`/edit/${product.id}`}>edit</ButtonNav>
 
-        <Button
+        <ButtonDelete
           onClick={async () => await deleteProduct(product.id)}
           disabled={loading}
         >
           {loading ? "Deleting..." : `Delete`}
-        </Button>
+        </ButtonDelete>
 
         <Message error show={error}>
           {error}

@@ -38,7 +38,7 @@ const Home = ({ products, requesting, requested, loggedIn }) => {
         <p>Loading...</p>
       </ResultWrapper>
     );
-  } else if (requested && products === null) {
+  } else if (requested.products && products === null) {
     result = (
       <ResultWrapper>
         <p>No products has been added yet</p>
@@ -93,13 +93,3 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect(() => ["products"])
 )(Home);
-
-// const dictionaryToArray = (dictionary) => {
-//   let array = [];
-
-//   for (const key in dictionary) {
-//     array.push({ ...dictionary[key] });
-//   }
-
-//   return array;
-// };

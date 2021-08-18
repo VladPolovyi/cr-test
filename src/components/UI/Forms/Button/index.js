@@ -9,6 +9,7 @@ const StyledButton = styled.button`
 
   &:disabled {
     background-color: var(--color-grey);
+    cursor: not-allowed;
   }
 `;
 
